@@ -5,6 +5,10 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
 import { useState } from "react";
 import PasswordInput from "@/components/PasswordInput";
+import { useRegister } from "@/service/hooks";
+import { useRouter } from "next/navigation";
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 const schema = yup.object().shape({
   firstName: yup.string().required("First Name is required"),
@@ -25,6 +29,8 @@ interface FormValues {
 
 export default function Home() {
   const [passwordVisible, setPasswordVisible] = useState(false);
+  const registerUser = useRegister();
+    const { push } = useRouter();
 
   const passwordVisibility = () => {
     setPasswordVisible(!passwordVisible);
@@ -39,7 +45,14 @@ export default function Home() {
   });
 
   const onSubmit: SubmitHandler<FormValues> = (data) => {
-    console.log(data);
+    registerUser
+      .mutateAsync(data)
+      .then((res) => {
+        push("/login");
+        toast("Registration Successful");
+      })
+      .catch((err) => {});
+    // console.log(data);
   };
   return (
     <main className="flex min-h-screen flex-col justify-center items-center bg-[#C2C2C2]">
@@ -85,39 +98,52 @@ export default function Home() {
                   <p className="text-[#a10]">{errors.firstName?.message}</p>
                 </div>
                 <div className="mb-4">
+                  <label
+                    htmlFor={"username"}
+                    className="block font-medium mb-1 text-[14px] leading-[22px] text-[#222D33]"
+                  >
+                    Username
+                  </label>
                   <Controller
                     name="username"
                     control={control}
                     render={({ field }) => (
-                      <PasswordInput
-                        label="Username"
+                      <input
+                        {...field}
                         type="text"
                         placeholder="Enter your Username"
-                        //@ts-ignore
-                        field={field}
-                        error={errors.username}
+                        className={`w-full p-2 rounded border ${
+                          errors.firstName ? "border-[#a10]" : "border-#E5E7EB"
+                        } focus:border-[#005700] focus:outline-none placeholder:text-[16px] placeholder:leading-[28px] text-[#222D33] placeholder:font-normal placeholder:text-opacity-100`}
                       />
                     )}
                   />
+                  <p className="text-[#a10]">{errors.username?.message}</p>
                 </div>
               </div>
               <div className="w-[50%]">
                 <div className="mb-10">
+                  <label
+                    htmlFor={"lasttName"}
+                    className="block font-medium mb-1 text-[14px] leading-[22px] text-[#222D33]"
+                  >
+                    Last name
+                  </label>
                   <Controller
                     name="lastName"
                     control={control}
                     render={({ field }) => (
-                      <PasswordInput
-                        label="Last name"
+                      <input
+                        {...field}
                         type="text"
                         placeholder="Enter your Last name"
-                        //@ts-ignore
-                        field={field}
-                        error={errors.lastName}
-                        // isPassword={true}
+                        className={`w-full p-2 rounded border ${
+                          errors.firstName ? "border-[#a10]" : "border-#E5E7EB"
+                        } focus:border-[#005700] focus:outline-none placeholder:text-[16px] placeholder:leading-[28px] text-[#222D33] placeholder:font-normal placeholder:text-opacity-100`}
                       />
                     )}
                   />
+                  <p className="text-[#a10]">{errors.lastName?.message}</p>
                 </div>
 
                 <div className="mb-4 relative">
@@ -143,9 +169,32 @@ export default function Home() {
               <button
                 // disabled={false}
                 type="submit"
-                className="block disabled:opacity-60 py-3 w-80 disabled:cursor-not-allowed cursor-pointer rounded-xl bg-[#005700] text-[#fff]"
+                className="flex items-center justify-center disabled:opacity-60 py-3 w-80 disabled:cursor-not-allowed cursor-pointer rounded-xl bg-[#005700] text-[#fff] text-center"
               >
-                Create Account
+                {registerUser.isPending ? (
+                  <svg
+                    className="animate-spin h-7 w-7 mr-3 text-white"
+                    width="24px"
+                    height="24px"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <path
+                      opacity="0.2"
+                      fillRule="evenodd"
+                      clipRule="evenodd"
+                      d="M12 19C15.866 19 19 15.866 19 12C19 8.13401 15.866 5 12 5C8.13401 5 5 8.13401 5 12C5 15.866 8.13401 19 12 19ZM12 22C17.5228 22 22 17.5228 22 12C22 6.47715 17.5228 2 12 2C6.47715 2 2 6.47715 2 12C2 17.5228 6.47715 22 12 22Z"
+                      fill="white"
+                    />
+                    <path
+                      d="M2 12C2 6.47715 6.47715 2 12 2V5C8.13401 5 5 8.13401 5 12H2Z"
+                      fill="white"
+                    />
+                  </svg>
+                ) : (
+                  "Create Account"
+                )}
               </button>
               <div className="flex items-center gap-2 mt-4">
                 <span className="text-[14px] leading-[16px] text-[#464F54] font-extralight active:scale-75 ease-in-out">
