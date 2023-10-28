@@ -1,5 +1,6 @@
+"use client";
 import { useGetProduct } from "@/service/hooks";
-import React from "react";
+import React, { useMemo } from "react";
 import {
   useTable,
   useSortBy,
@@ -8,41 +9,41 @@ import {
 } from "react-table";
 import { Column } from "react-table";
 interface IProduct {
-  name: string;
   description: string;
+  name: string;
   price: number;
-  quantity: number;
+  quantity?: number;
+  __v: number;
+  _id: string;
 }
 
-const Table = () => {
-  const getProduct = useGetProduct(1, 10);
-  console.log({ getProduct });
+const Table = (productData: IProduct[]) => {
+
+
+  const data = useMemo(() => productData || [], [productData]);
   const dColumns: readonly Column<IProduct>[] = [
     {
       Header: "NAME",
       accessor: "name",
-      //@ts-ignore
-      Cell: ({ value, row }) => {
-        return;
-      },
+      Cell: ({ value }) => (
+        <div className="text-center">
+          <strong>{value}</strong>
+        </div>
+      ),
     },
-    // {
-    //   Header: "DESCRIPTION",
-    //   accessor: "description",
-    //   Cell: ({}) => {
-    //     return;
-    //   },
-    // },
-    // {
-    //   Header: "QUANTITY",
-    //   accessor: "quantity",
-    //   Cell: ({}) => {
-    //     // console.log(row);
-    //       return;
-    //   },
-    // },
+    {
+      Header: "DESCRIPTION",
+      accessor: "description",
+      Cell: ({ value }) => <div className="text-left">{value}</div>,
+    },
+    {
+      Header: "QUANTITY",
+      accessor: "quantity",
+      Cell: ({ value }) => <div className="text-center">{value}</div>,
+    },
   ];
 
+  const columns = useMemo(() => dColumns, []);
   const table = useTable(
     {
       columns,
@@ -132,22 +133,27 @@ const Table = () => {
           {...getTableBodyProps()}
           className="mt-3 pt-3 w-full space-y-8 border-r border-slate-50"
         >
-          {/* {page.map(
-            (row: {
-              getRowProps: () => JSX.IntrinsicAttributes &
-                React.ClassAttributes<HTMLTableRowElement> &
-                React.HTMLAttributes<HTMLTableRowElement>;
-              cells: any[];
-            }) => {
+          {page.map(
+            (
+              rowIndex: React.Key | null | undefined,
+              row: {
+                getRowProps: () => JSX.IntrinsicAttributes &
+                  React.ClassAttributes<HTMLTableRowElement> &
+                  React.HTMLAttributes<HTMLTableRowElement>;
+                cells: any[];
+              }
+            ) => {
               prepareRow(row);
               return (
                 <tr
+                  key={rowIndex}
                   {...row.getRowProps()}
                   className="appearance-none my-4 border border-slate-50 even:bg-white odd:bg-slate-100"
                 >
-                  {row.cells.map((cell) => {
+                  {row.cells.map((cell, index) => {
                     return (
                       <td
+                        key={index}
                         {...cell.getCellProps()}
                         className="font-normal text-sm text-[#202223] py-4 px-4 border-r border-slate-50 text-left"
                       >
@@ -158,7 +164,7 @@ const Table = () => {
                 </tr>
               );
             }
-          )} */}
+          )}
         </tbody>
       </table>
     </div>

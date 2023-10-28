@@ -1,5 +1,7 @@
 import { QueryObserverResult, UseQueryOptions, useQuery } from "@tanstack/react-query";
 
+
+
 const useQueryAction = <
   TQueryFnData = unknown,
   TError = unknown,
@@ -11,7 +13,7 @@ const useQueryAction = <
     retry: false,
     refetchOnWindowFocus: false,
     ...queries,
-    queryKey: queries.queryKey || [queries],
+    // queryKey: queries.queryKey || [queries],
     onError: (e: any) => {
       // console.log(e)
       return e;

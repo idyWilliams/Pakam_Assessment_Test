@@ -1,6 +1,7 @@
 import useQueryMutation from "@/utils/useQueryMutation";
-import { api, makeGetRequest, makePostRequest } from "../api";
+import { BASEURL, api, makeGetRequest, makePostRequest } from "../api";
 import useQueryAction from "@/utils/useQueryAction";
+import axios from "axios";
 
 //users
 export const useUserLogin = () => {
@@ -34,9 +35,30 @@ export const useCreateProduct = () => {
   });
 };
 
-export const useGetProduct = (page: number, limit: number) => {
-  return useQueryAction({
-    queryFn: () => makeGetRequest(api.products.getProducts(page, limit)),
-    queryKey: ["xcxvxcvxcv"],
-  });
+// export const useGetProduct = (page: number, limit: number) => {
+//   return useQueryAction({
+//     queryFn: () => makeGetRequest(api.products.getProducts(page, limit)),
+//     queryKey: ["page"],
+//   });
+// };
+
+// import axios from "axios";
+
+interface APIResponse {
+  // Define the structure of your API response data
+  data: any[]; // Adjust the type according to your API response
+}
+
+export const useGetProduct = async (
+  page: number,
+  limit: number
+): Promise<APIResponse> => {
+  try {
+    const response = await axios.get(
+      `${BASEURL}/api/product/list?page=${page}&limit=${limit}`
+    );
+    return response.data;
+  } catch (error) {
+    throw new Error("Failed to fetch data from the API");
+  }
 };
