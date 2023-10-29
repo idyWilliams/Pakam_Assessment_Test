@@ -30,3 +30,5 @@ This project is built using the following technologies:
 ## Start Exploring
 
 You can start exploring the app by modifying the pages in the `app` directory. The page auto-updates as you edit the files, providing you with a seamless development experience.
+
+Built and deployed with ❤️ by [Idorenyin Williams](https://twitter.com/iWil_lian).
