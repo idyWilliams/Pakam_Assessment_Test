@@ -29,7 +29,7 @@ export const useCreateProduct = () => {
     mutationFn: (data: {
       name: string;
       description: string;
-      price: number;
+      price?: number;
       quantity: number;
     }) => makePostRequest(data, api.products.createProduct),
   });
@@ -42,11 +42,11 @@ export const useCreateProduct = () => {
 //   });
 // };
 
-// import axios from "axios";
+
 
 interface APIResponse {
-  // Define the structure of your API response data
-  data: any[]; // Adjust the type according to your API response
+
+  data: any[];
 }
 
 export const useGetProduct = async (

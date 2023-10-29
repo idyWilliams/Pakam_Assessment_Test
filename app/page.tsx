@@ -52,7 +52,6 @@ export default function Home() {
         toast("Registration Successful");
       })
       .catch((err) => {});
-    // console.log(data);
   };
   return (
     <main className="flex min-h-screen flex-col justify-center items-center bg-[#C2C2C2]">
@@ -91,7 +90,7 @@ export default function Home() {
                         placeholder="Enter your First name"
                         className={`w-full p-2 rounded border ${
                           errors.firstName ? "border-[#a10]" : "border-#E5E7EB"
-                        } focus:border-[#005700] focus:outline-none placeholder:text-[16px] placeholder:leading-[28px] text-[#222D33] placeholder:font-normal placeholder:text-opacity-100`}
+                        } focus:border-[#005700] focus:outline-none placeholder:text-[16px] placeholder:leading-[28px] text-[#222D33] placeholder:font-normal placeholder:text-[#C2C2C2]`}
                       />
                     )}
                   />
@@ -114,7 +113,7 @@ export default function Home() {
                         placeholder="Enter your Username"
                         className={`w-full p-2 rounded border ${
                           errors.firstName ? "border-[#a10]" : "border-#E5E7EB"
-                        } focus:border-[#005700] focus:outline-none placeholder:text-[16px] placeholder:leading-[28px] text-[#222D33] placeholder:font-normal placeholder:text-opacity-100`}
+                        } focus:border-[#005700] focus:outline-none placeholder:text-[16px] placeholder:leading-[28px] text-[#222D33] placeholder:font-normal placeholder:text-[#C2C2C2]`}
                       />
                     )}
                   />
@@ -139,7 +138,7 @@ export default function Home() {
                         placeholder="Enter your Last name"
                         className={`w-full p-2 rounded border ${
                           errors.firstName ? "border-[#a10]" : "border-#E5E7EB"
-                        } focus:border-[#005700] focus:outline-none placeholder:text-[16px] placeholder:leading-[28px] text-[#222D33] placeholder:font-normal placeholder:text-opacity-100`}
+                        } focus:border-[#005700] focus:outline-none placeholder:text-[16px] placeholder:leading-[28px] text-[#222D33] placeholder:font-normal placeholder:text-[#C2C2C2]`}
                       />
                     )}
                   />

@@ -26,9 +26,7 @@ const Login = () => {
   const [passwordVisible, setPasswordVisible] = useState(false);
   const login = useUserLogin();
    const { push } = useRouter();
-  const passwordVisibility = () => {
-    setPasswordVisible(!passwordVisible);
-  };
+
   const {
     register,
     control,
@@ -45,11 +43,11 @@ const Login = () => {
         console.log(res);
         localStorage.removeItem("accessToken");
         localStorage.setItem("accessToken", res.data.token.token);
-        push("/login");
-          toast(res.data.message);
+        push("/dashboard");
+          toast("Welcome");
       })
       .catch((err) => {});
-    console.log(data);
+
   };
   return (
     <div className="flex min-h-screen flex-col justify-center items-center bg-[#C2C2C2]">
@@ -87,7 +85,7 @@ const Login = () => {
                       placeholder="Enter your Username"
                       className={`w-full p-2 rounded border ${
                         errors.username ? "border-[#a10]" : "border-#E5E7EB"
-                      } focus:border-[#005700] focus:outline-none placeholder:text-[16px] placeholder:leading-[28px] text-[#222D33] placeholder:font-normal placeholder:text-opacity-100`}
+                      } focus:border-[#005700] focus:outline-none placeholder:text-[16px] placeholder:leading-[28px] text-[#222D33] placeholder:font-normal placeholder:text-[#C2C2C2]`}
                     />
                   )}
                 />
