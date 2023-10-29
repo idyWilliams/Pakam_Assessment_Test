@@ -1,6 +1,7 @@
 import axios from "axios";
 
-export const BASEURL = process.env.NEXT_PUBLIC_BASEURL || "";
+export const BASEURL =
+  process.env.NEXT_PUBLIC_BASEURL || "https://assessment.pakam.ng";
 
 export const api = {
   users: {
