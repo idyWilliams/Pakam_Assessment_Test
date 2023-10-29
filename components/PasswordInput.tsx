@@ -46,7 +46,7 @@ const PasswordInput: React.FC<IPasswordInputProps> = ({
       </label>
       <input
         {...field}
-        type={visible ? "text" : "password"}
+        type={!visible ? "password" : "text"}
         placeholder={placeholder}
         className={`w-full p-2 rounded-md border ${
           error ? "border-[#a10]" : "border - #E5E7EB"
@@ -55,12 +55,12 @@ const PasswordInput: React.FC<IPasswordInputProps> = ({
 
       <span
         onClick={handleVisibilty}
-        className="absolute  right-4 transform -translate-y-8   cursor-pointer text-gray-500"
+        className="absolute  right-4 transform translate-y-2   cursor-pointer text-gray-500"
       >
         {visible ? (
-          <AiOutlineEyeInvisible size={23} />
-        ) : (
-          <AiOutlineEye size={23} />
+            <AiOutlineEye size={23} />
+            ) : (
+            <AiOutlineEyeInvisible size={23} />
         )}
       </span>
       <p className="text-[#a10]">{error?.message}</p>
